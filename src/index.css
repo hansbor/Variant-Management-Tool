@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #2d4b5f;
+  --color-secondary: #f8f9fa;
+  --color-border: #e2e8f0;
+  --color-text: #334155;
+  --color-text-light: #64748b;
+}
+
+body {
+  color: var(--color-text);
+  background-color: var(--color-secondary);
+}
+
+/* Common button styles */
+.btn {
+  @apply px-4 py-2 rounded-md font-medium transition-all duration-200 flex items-center gap-2 text-sm;
+  @apply shadow-sm hover:shadow-md;
+  @apply border border-transparent;
+  @apply focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary;
+}
+
+.btn-primary {
+  @apply bg-primary text-white hover:bg-blue-700;
+  @apply focus:ring-blue-500;
+}
+
+.btn-secondary {
+  @apply bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-300;
+  @apply focus:ring-gray-500;
+}
+
+.btn-danger {
+  @apply bg-red-600 text-white hover:bg-red-700;
+  @apply focus:ring-red-500;
+}
+
+.btn-success {
+  @apply bg-emerald-600 text-white hover:bg-emerald-700;
+  @apply focus:ring-emerald-500;
+}
+
+.btn-outline {
+  @apply border border-gray-300 text-gray-700 hover:bg-gray-50;
+  @apply focus:ring-gray-500;
+}
+
+.btn-icon {
+  @apply p-2 rounded-full;
+  @apply hover:bg-opacity-10;
+}
+
+.refresh-button {
+  @apply bg-primary text-white hover:bg-blue-700;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.2s ease-out;
+}
