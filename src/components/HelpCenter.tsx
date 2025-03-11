@@ -1,6 +1,17 @@
 import React from 'react';
 import { HelpCircle, Box, Tag, Barcode, Package2, Settings as SettingsIcon, FileSpreadsheet, ShoppingCart, Truck, ClipboardCheck } from 'lucide-react';
 
+const frameworks = [
+  { name: 'React', version: '18.3.1' },
+  { name: 'Vite', version: '5.4.2' },
+  { name: 'Tailwind CSS', version: '3.4.1' },
+  { name: 'TypeScript', version: '5.5.3' },
+  { name: 'Supabase', version: '2.39.7' },
+  { name: 'lucide-react', version: '0.344.0' },
+  { name: 'tinymce-react', version: '4.3.2' },
+  { name: 'xlsx', version: '0.18.5' },
+];
+
 const HelpCenter: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto p-6">
@@ -273,6 +284,23 @@ const HelpCenter: React.FC = () => {
                   </ul>
                 </div>
               </div>
+            </div>
+          </section>
+
+          {/* Framework and Versions */}
+          <section>
+            <h2 className="text-xl font-semibold text-gray-800 mb-4">Framework and Versions</h2>
+            <div className="p-4 bg-gray-50 rounded-lg">
+              <p className="text-gray-600">
+                This application is built using the following frameworks and libraries:
+              </p>
+              <ul className="list-disc list-inside text-sm text-gray-600 mt-2">
+                {frameworks.map(framework => (
+                  <li key={framework.name}>
+                    <b>{framework.name}:</b> version {framework.version}
+                  </li>
+                ))}
+              </ul>
             </div>
           </section>
         </div>
