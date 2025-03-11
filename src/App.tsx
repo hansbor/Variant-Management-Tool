@@ -7,10 +7,9 @@ import SupplierList from './components/SupplierList';
 import PurchaseOrderList from './components/PurchaseOrderList';
 import PurchaseOrderForm from './components/PurchaseOrderForm';
 import HelpCenter from './components/HelpCenter';
-import HelpMenu from './components/HelpMenu';
 import { Product } from './types';
 
-type View = 'products' | 'suppliers' | 'settings' | 'product-form' | 'purchase-orders' | 'purchase-order-form' | 'auth';
+type View = 'products' | 'suppliers' | 'settings' | 'product-form' | 'purchase-orders' | 'purchase-order-form' | 'auth' | 'help-center';
 
 function Auth() {
   const [email, setEmail] = useState(''); // Initialize email as empty string
@@ -47,7 +46,7 @@ function Auth() {
     setError(null);
 
     try {
-      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      const { error } = await supabase.auth.auth.resetPasswordForEmail(email, {
         redirectTo: `${window.location.origin}`,
       });
 
@@ -76,7 +75,7 @@ function Auth() {
             </div>
           </div>
           <h1 className="text-2xl font-semibold text-center text-gray-800 mb-2">Variant Management Tool</h1>
-          
+
 
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
@@ -144,7 +143,6 @@ function App() {
   const [editProduct, setEditProduct] = useState<Product | null>(null);
   const [editPurchaseOrder, setEditPurchaseOrder] = useState<string | null>(null);
   const [selectedTab, setSelectedTab] = useState('general');
-  const [isHelpMenuOpen, setIsHelpMenuOpen] = useState(false);
   const [session, setSession] = useState<any>(null);
 
   useEffect(() => {
@@ -172,9 +170,6 @@ function App() {
     setView('products');
   }, []);
 
-  const toggleHelpMenu = () => {
-    setIsHelpMenuOpen(!isHelpMenuOpen);
-  };
 
   if (!session) {
     return <Auth />;
@@ -219,10 +214,12 @@ function App() {
               Settings
             </button>
             <button
-              onClick={toggleHelpMenu}
-              className={`text-white hover:text-gray-200`}
+              onClick={() => setView('help-center')}
+              className={`text-white hover:text-gray-200 ${
+                view === 'help-center' ? 'border-b-2 border-white' : ''
+              }`}
             >
-              Help
+              Help Center
             </button>
             <button
               onClick={() => supabase.auth.signOut()}
@@ -238,7 +235,7 @@ function App() {
         {view === 'settings' && (
           <Settings />
         )}
-        {view === 'help' && <HelpCenter />}
+        {view === 'help-center' && <HelpCenter />}
       </div>
 
       {view === 'products' && (
@@ -282,7 +279,6 @@ function App() {
           }}
         />
       )}
-      <HelpMenu isOpen={isHelpMenuOpen} onClose={toggleHelpMenu} />
     </div>
   );
 }
