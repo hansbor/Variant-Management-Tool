@@ -1,5 +1,7 @@
 # Variant-Management-Tool
 
+2025-03-13
+
 Core Concepts
 Products
 Products are the main entities in the system. Each product can have multiple variants with different sizes, colors, and prices.
