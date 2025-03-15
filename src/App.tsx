@@ -8,8 +8,9 @@ import PurchaseOrderList from './components/PurchaseOrderList';
 import PurchaseOrderForm from './components/PurchaseOrderForm';
 import HelpCenter from './components/HelpCenter';
 import { Product } from './types';
+import TableExplorer from './components/TableExplorer'; // Import TableExplorer
 
-type View = 'products' | 'suppliers' | 'settings' | 'product-form' | 'purchase-orders' | 'purchase-order-form' | 'auth' | 'help-center';
+type View = 'products' | 'suppliers' | 'settings' | 'product-form' | 'purchase-orders' | 'purchase-order-form' | 'auth' | 'help-center' | 'table-explorer'; // Add 'table-explorer' to View type
 
 function Auth() {
   const [email, setEmail] = useState(''); // Initialize email as empty string
@@ -222,6 +223,14 @@ function App() {
               Help Center
             </button>
             <button
+              onClick={() => setView('table-explorer')} // Add Table Explorer button
+              className={`text-white hover:text-gray-200 ${
+                view === 'table-explorer' ? 'border-b-2 border-white' : ''
+              }`}
+            >
+              Table Explorer
+            </button>
+            <button
               onClick={() => supabase.auth.signOut()}
               className={`text-white hover:text-gray-200`}
             >
@@ -236,6 +245,7 @@ function App() {
           <Settings />
         )}
         {view === 'help-center' && <HelpCenter />}
+        {view === 'table-explorer' && <TableExplorer />} {/* Render TableExplorer component */}
       </div>
 
       {view === 'products' && (
