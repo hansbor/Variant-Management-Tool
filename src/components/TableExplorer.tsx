@@ -97,26 +97,20 @@ const TableExplorer: React.FC = () => {
   const handleExportExcelData = useCallback(() => {
     console.log('Export button clicked.');
 
-    let api = gridApi;
-    if (!api && gridRef.current?.api) {
-      api = gridRef.current.api;
-      console.log('Using gridRef.current.api as fallback');
-    }
-
-    if (!api) {
+    if (!gridRef.current?.api) {
       console.warn('AgGrid API not yet available');
       return;
     }
 
-    if (typeof api.getRowData !== 'function') {
-      console.error('gridApi.getRowData is NOT a function!');
-      console.log('gridApi:', gridApi); // Log gridApi
-      console.log('gridRef.current?.api:', gridRef.current?.api); // Log fallback
-      return;
-    }
+    const api = gridRef.current.api;
 
     try {
-      const exportData = api.getRowData();
+      const exportData = [];
+      api.forEachNode((node) => {
+        if (node.data) {
+          exportData.push(node.data);
+        }
+      });
       console.log('Export data:', exportData); // Log exportData
 
       if (!exportData || !Array.isArray(exportData) || exportData.length === 0) {
@@ -148,13 +142,12 @@ const TableExplorer: React.FC = () => {
       URL.revokeObjectURL(url);
 
     } catch (error) {
-      console.error('Error during Excel export:', error);
+      console.error('Error during Excel export:', error instanceof Error ? error.message : error);
     }
   }, [columnDefs, selectedTable, gridApi]);
 
   const onGridReady = useCallback((params) => {
     setGridApi(params.api);
-    console.log('gridApi set in onGridReady:', params.api); // Debugging: Check gridApi
   }, []);
 
   const onSelectionChanged = useCallback(() => {
