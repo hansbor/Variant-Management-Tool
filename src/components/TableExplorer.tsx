@@ -6,7 +6,7 @@ import { supabase } from '../lib/supabase';
 import * as XLSX from 'xlsx';
 import { GridApi, RowNode, ColDef, GridOptions } from 'ag-grid-community';
 
-const staticTableNames = [
+export const staticTableNames = [
   "addresses",
   "brands",
   "categories",
@@ -189,7 +189,6 @@ const TableExplorer: React.FC = () => {
       ],
     },
   };
-
 
   return (
     <div className="p-6 w-full">

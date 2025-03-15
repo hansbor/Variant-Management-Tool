@@ -7,17 +7,17 @@ import SupplierList from './components/SupplierList';
 import PurchaseOrderList from './components/PurchaseOrderList';
 import PurchaseOrderForm from './components/PurchaseOrderForm';
 import HelpCenter from './components/HelpCenter';
+import ChatBot from './components/ChatBot';
 import { Product } from './types';
-import TableExplorer from './components/TableExplorer'; // Import TableExplorer
+import TableExplorer from './components/TableExplorer';
 
-type View = 'products' | 'suppliers' | 'settings' | 'product-form' | 'purchase-orders' | 'purchase-order-form' | 'auth' | 'help-center' | 'table-explorer'; // Add 'table-explorer' to View type
+type View = 'products' | 'suppliers' | 'settings' | 'product-form' | 'purchase-orders' | 'purchase-order-form' | 'auth' | 'help-center' | 'table-explorer' | 'chat-bot';
 
 function Auth() {
-  const [email, setEmail] = useState(''); // Initialize email as empty string
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  //const [userName, setUserName] = useState('Hans'); // Remove userName state
 
   const handleSignIn = async () => {
     setLoading(true);
@@ -223,12 +223,20 @@ function App() {
               Help Center
             </button>
             <button
-              onClick={() => setView('table-explorer')} // Add Table Explorer button
+              onClick={() => setView('table-explorer')}
               className={`text-white hover:text-gray-200 ${
                 view === 'table-explorer' ? 'border-b-2 border-white' : ''
               }`}
             >
               Table Explorer
+            </button>
+            <button
+              onClick={() => setView('chat-bot')}
+              className={`text-white hover:text-gray-200 ${
+                view === 'chat-bot' ? 'border-b-2 border-white' : ''
+              }`}
+            >
+              Chat Bot
             </button>
             <button
               onClick={() => supabase.auth.signOut()}
@@ -244,8 +252,9 @@ function App() {
         {view === 'settings' && (
           <Settings />
         )}
+        {view === 'chat-bot' && <ChatBot />}
         {view === 'help-center' && <HelpCenter />}
-        {view === 'table-explorer' && <TableExplorer />} {/* Render TableExplorer component */}
+        {view === 'table-explorer' && <TableExplorer />}
       </div>
 
       {view === 'products' && (
